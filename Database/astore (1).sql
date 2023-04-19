@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2022 at 11:18 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.28
+-- Generation Time: Apr 18, 2023 at 11:00 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,7 +45,13 @@ CREATE TABLE `addresses` (
 INSERT INTO `addresses` (`AddressID`, `UserID`, `FullName`, `StreetAddress`, `PostCode`, `City`, `Country`, `Phone`) VALUES
 (1, 1, 'Admin', 'Vanha Maantie 6', '02650', 'Espoo', 'Finland', '0123456789'),
 (2, 2, 'Anh Pham', 'Vanha Maantie 8', '02650', 'Helsinki', 'Finland', '012 345 6787'),
-(3, 3, 'adones evangelista', 'Purok1, Brgy.Tan-awan', '6111', 'Kabankalan City', 'Philippines', '09120119912');
+(3, 3, 'adones evangelista', 'Purok1, Brgy.Tan-awan', '6111', 'Kabankalan City', 'Philippines', '09120119912'),
+(4, 4, 'Baishakhi Behera', '1263', '75110', 'bbsr', 'india', '8249570678'),
+(5, 4, 'Baishakhi Behera', '1263', '75110', 'bbsr', 'india', '8249570678'),
+(6, 4, 'Baishakhi Behera', '1263', '75110', 'bbsr', 'india', '8249570678'),
+(7, 5, 'chandan', 'test', '123', 'test', 'test', '8249570678'),
+(8, 5, 'chandan', 'test', '123', 'test', 'test', '8249570679'),
+(9, 5, '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -66,14 +72,14 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `CategorySlug`, `Image`) VALUES
-(1, 'Smartphone', 'Mobile phones', 'smartphone', 'smartphone.png'),
-(2, 'TV', 'TVs', 'tv', 'tv.png'),
-(3, 'Computers', 'Computers', 'computers', 'computers.png'),
-(4, 'Game Console', 'Game Consoles', 'game-console', 'game-console.png'),
-(5, 'Networks', 'Networks', 'networks', 'networks.png'),
-(6, 'Software', 'Software', 'software', 'software.png'),
-(7, 'Camera', 'Cameras', 'camera', 'camera.png'),
-(8, 'Cables', 'Cables', 'cables', 'cables.png');
+(1, 'LOW END', 'Budget Friendly Watches', 'Casual', 'smartphone.png'),
+(2, 'MID END', 'Slight higher in Price but best in comfort', 'Regular', 'tv.png'),
+(3, 'HIGH END', 'Luxurious Watches with premium artwork', 'Luxuries', 'computers.png'),
+(4, 'GAMERS', 'Game Consoles', 'Gaming', 'game-console.png'),
+(5, 'SMART', 'Networks', 'Smart', 'networks.png'),
+(6, 'OFFICE', 'Software', 'Office', 'software.png'),
+(7, 'PARTY', 'Cameras', 'Party', 'camera.png'),
+(8, 'STORE SPECIAL', 'Cables', 'Special', 'cables.png');
 
 -- --------------------------------------------------------
 
@@ -88,6 +94,13 @@ CREATE TABLE `messages` (
   `Subject` varchar(128) DEFAULT NULL,
   `Content` varchar(158) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`MessageID`, `FullName`, `Email`, `Subject`, `Content`) VALUES
+(1, 'chandan', 'chan@gmail.com', 'wdswsw', 'wswsw');
 
 -- --------------------------------------------------------
 
@@ -107,7 +120,12 @@ CREATE TABLE `order details` (
 --
 
 INSERT INTO `order details` (`OrderID`, `ProductID`, `Quantity`, `Total`) VALUES
-(1, 1, 1, '850.52');
+(1, 1, 1, '850.52'),
+(2, 1, 1, '850.52'),
+(2, 4, 1, '350.89'),
+(3, 3, 1, '600.56'),
+(4, 1, 1, '850.52'),
+(5, 1, 2, '1701.04');
 
 -- --------------------------------------------------------
 
@@ -132,7 +150,11 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`OrderID`, `UserID`, `AddressID`, `SubTotal`, `Discount`, `ShippingFee`, `Total`, `OrderDate`, `Status`) VALUES
-(1, 3, 3, '850.52', '0.00', '0.00', '850.52', '2022-04-06 16:51:10', 'Order Received');
+(1, 3, 3, '850.52', '0.00', '0.00', '850.52', '2022-04-06 16:51:10', 'Order Received'),
+(2, 4, 5, '1201.41', '0.00', '0.00', '1201.41', '2023-04-16 12:42:51', 'Order Received'),
+(3, 4, 6, '600.56', '0.00', '0.00', '600.56', '2023-04-18 11:53:46', 'Order Received'),
+(4, 5, 8, '850.52', '0.00', '0.00', '850.52', '2023-04-19 01:09:41', 'Order Received'),
+(5, 5, 8, '1701.04', '0.00', '0.00', '1701.04', '2023-04-19 01:44:37', 'Order Received');
 
 -- --------------------------------------------------------
 
@@ -158,19 +180,19 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`ProductID`, `ProductName`, `CategoryID`, `ProductPrice`, `UnitsInStock`, `Description`, `ManufactureYear`, `Image`, `ProductSlug`, `Feature`) VALUES
-(1, 'iPhone 6', 1, '850.52', 17, 'Lateast', 2015, '1.png', 'iphone-6', 1),
-(2, 'iPhone 5S', 1, '500.22', 15, 'Newer', 2014, '2.png', 'iphone-5s', 0),
-(3, 'Sony 40 inches', 2, '600.56', 10, 'Sony Full HD', 2013, '3.png', 'sony-40-inches', 1),
-(4, 'Samsung 32 inches', 2, '350.89', 12, 'Samsung LED', 2012, '4.png', 'samsung-32-inches', 0),
-(5, 'Lenovo PC', 3, '1000.99', 8, 'Intel-NVIDA-Logitech', 2011, '5.png', 'lenovo-pc', 0),
-(6, 'Macbook Pro', 3, '2300.89', 6, 'Apple Early 2010', 2010, '6.png', 'macbook-pro', 1),
-(7, 'XBOX Five', 4, '600.88', 12, 'Microsoft Future', 2009, '7.png', 'xbox-five', 0),
-(8, 'PlayStation 6', 4, '522.99', 15, 'Sony Tomorrow', 2008, '8.png', 'playstation-6', 1),
-(9, 'Linksys 123', 5, '200.55', 16, 'Modem ADSL 8+', 2001, '9.png', 'linksys-123', 1),
-(10, 'Netgear 456', 5, '43.33', 22, 'Router Full Speed', 2005, '10.png', 'netgear-456', 0),
-(11, 'Adobe Photoshop CC', 6, '120.89', 17, 'Adobe Power', 2018, '11.png', 'adobe-photoshop-cc', 1),
-(12, 'Canon 2222D', 7, '1209.59', 16, 'Canon Powerful 3D', 2019, '12.png', 'canon-2222d', 1),
-(13, 'HDMI 5.0', 8, '5.88', 14, 'HDMI High Speed Standard', 2002, '13.png', 'hdmi-5.0', 1);
+(1, 'Rolex', 1, '850.52', 14, 'Lateast', 2015, '1.png', 'rolex', 1),
+(2, 'Sonata', 1, '500.22', 15, 'Sonata', 2014, '2.png', 'iphone-5s', 0),
+(3, 'Fastrack', 2, '600.56', 9, 'Sony Full HDFastrack', 2013, '3.png', 'sony-40-inches', 1),
+(4, 'Fossil', 2, '350.89', 10, 'Fossil', 2012, '4.png', 'samsung-32-inches', 0),
+(5, 'Glashutte ', 5, '500.22', 15, 'Glashutte ', 2014, '5.png', 'Glashutte', 0),
+(6, 'Ulysse ', 3, '2300.89', 6, 'Ulysse ', 2010, '6.png', 'macbook-pro', 1),
+(7, 'Omega', 4, '600.88', 12, 'Omega', 2009, '7.png', 'xbox-five', 0),
+(8, 'Jaeger-LeCoultre.\n', 4, '522.99', 15, 'Jaeger-LeCoultre.\n', 2008, '8.png', 'playstation-6', 1),
+(9, 'Vacheron', 5, '200.55', 16, 'Vacheron', 2001, '9.png', 'linksys-123', 1),
+(10, 'Audemars ', 5, '43.33', 22, 'Audemars ', 2005, '10.png', 'netgear-456', 0),
+(11, 'Power', 6, '120.89', 17, 'Power', 2018, '11.png', 'adobe-photoshop-cc', 1),
+(12, 'Patek Philippe', 7, '1209.59', 16, 'Patek Philippe', 2019, '12.png', 'canon-2222d', 1),
+(13, 'Audemars ', 8, '5.88', 14, 'Audemars ', 2002, '13.png', 'hdmi-5.0', 1);
 
 -- --------------------------------------------------------
 
@@ -181,6 +203,14 @@ INSERT INTO `products` (`ProductID`, `ProductName`, `CategoryID`, `ProductPrice`
 CREATE TABLE `subscribers` (
   `Email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `subscribers`
+--
+
+INSERT INTO `subscribers` (`Email`) VALUES
+('chan@gmail.com'),
+('chan@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -209,7 +239,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`UserID`, `FullName`, `StreetAddress`, `PostCode`, `City`, `Country`, `Phone`, `Email`, `Username`, `Password`, `Admin`) VALUES
 (1, 'Admin', 'Purok 1, Brgy.Enclaro', '6107', 'Binalbagan City', 'Phippines', '0912011191', 'admin@gmail.com', 'admin', '$2a$10$mpJCYlSr762SwQVzdLwxR.KgRuWEHA2NzUanxxG/nxEStDRcRBbB6', 1),
 (2, 'Jude Suares', 'Brgy.tooy', '6108', 'Himamaylan City', 'Philippines', '09123456732', 'jude@gmail.com', 'jude', '$2a$10$TsD7IW0m1g/57C931nC7R.FjwXw9i0tAbJZk7u4Uk0gDoneR9yBim', 0),
-(3, 'adones evangelista', 'Purok1, Brgy.Tan-awan', '6111', 'Kabankalan City', 'Philippines', '09120119912', 'adones@gmail.com', 'adones', '$2a$10$iuJPC5hx2s8DUwvjZAq1ZOmNzBKMO7zFTn7Tq9roUr9HFKGfFGToe', 0);
+(3, 'adones evangelista', 'Purok1, Brgy.Tan-awan', '6111', 'Kabankalan City', 'Philippines', '09120119912', 'adones@gmail.com', 'adones', '$2a$10$iuJPC5hx2s8DUwvjZAq1ZOmNzBKMO7zFTn7Tq9roUr9HFKGfFGToe', 0),
+(4, 'Baishakhi Behera', '1263', '75110', 'bbsr', 'india', '8249570678', 'baishakhib2001@gmail.com', 'baishakhi', '$2a$10$uMuNAGczHjVO0etASWqFjuTog39I2vxMh7lz77L1EYdHDsKQ9TIuy', 0),
+(5, 'chandan', 'test', '123', 'test', 'test', '8249570678', 'chan@gmail.com', 'test', '$2a$10$748iDQppDjoT83ovmbApdOU/me2MlrcPHX6M5gD6v6ivqE./YUtbq', 0);
 
 --
 -- Indexes for dumped tables
@@ -272,7 +304,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `AddressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `AddressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -284,13 +316,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `MessageID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MessageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -302,7 +334,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
